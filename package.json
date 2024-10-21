@@ -12,8 +12,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "ajv": "^8.17.1",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.4.0",
     "convict": "^6.2.4",
-    "express": "^4.21.1"
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^9.0.2",
+    "npm": "^10.9.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
