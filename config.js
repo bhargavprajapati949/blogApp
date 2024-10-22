@@ -5,16 +5,8 @@ const config = convict({
     port: {
         doc: 'The port to bind.',
         format: 'port',
-        default: 8080,
+        default: 80,
         env: 'PORT'
-    },
-    db: {
-        uri: {
-            doc: 'Database URI',
-            format: String,
-            default: './dev.sqlite',
-            env: 'DB_URI'
-        }
     },
     jwtSecret: {
         doc: 'JWT Secret Key',

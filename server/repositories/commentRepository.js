@@ -27,6 +27,7 @@ export const addComment = (postId, comment, userId) => {
     }
 };
 
+// Get all comments for a post
 export const getCommentsByPostId = (postId) => {
     try {
         const sqlQuery = db.prepare(`

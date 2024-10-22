@@ -2,6 +2,7 @@ import { verifyToken } from './../utils/jwtUtils.js'
 import { findUserByUsername } from './../repositories/userRepository.js'
 
 // Middleware to authenticate requests using JWT
+// Here, if strict is false, it will just add user to req object and will not stop unauthorized requests
 export const authenticateJWT = (strict = true) => (req, res, next) => {
     const token = req.cookies?.authToken;
 

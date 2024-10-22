@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser, loginUser } from '../service/auth.service';
 
@@ -6,8 +6,15 @@ const Auth = ({ isRegister, setLoggedInAndUpdateUserData }) => {
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('user'); // Default role
+    const [role, setRole] = useState('user');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setUsername('');
+        setName('');
+        setPassword('');
+        setRole('user');
+    }, [isRegister])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,11 +29,21 @@ const Auth = ({ isRegister, setLoggedInAndUpdateUserData }) => {
             const authToken = document.cookie.split('authToken=')[1];
             if (authToken) {
                 setLoggedInAndUpdateUserData();
+                navigate('/');
             }
-            navigate('/');
+            else{
+                throw new Error(`Failed to ${isRegister ? "Register" : "Login"}`);
+            }
         } catch (error) {
-            console.error('Error during registration:', error);
-            alert('Failed to register. Please try again.');
+            if(isRegister){
+                console.error('Error during registration:', error);
+                alert('Failed to register. Please try again.');
+            }
+            else{
+                console.error('Error during login:', error);
+                alert('Failed to login. Please try again.');
+            }
+            
         }
     };
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import config from '../../config.js';
 
-// Generate a JWT token for a user
+// Generating a JWT token for a user
 export const generateToken = (user) => {
     const secret = config.get('jwtSecret');
     const expireTime = config.get('jwtExpiry');

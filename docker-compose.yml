@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  blog-app:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - PORT=80
+      - NODE_ENV=production
+      - JWT_SECRET=supersecretkey
+      - TOKEN_EXPIRY=3600
