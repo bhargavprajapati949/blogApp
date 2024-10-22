@@ -12,7 +12,7 @@ export const postSchema = {
 export const changeStatusSchema = {
     type: 'object',
     properties: {
-        id: { type: 'integer' },
+        id: { type: 'string' },
         status: { type: 'string', enum: ['Draft', 'Published'] }
     },
     required: ['id', 'status'],

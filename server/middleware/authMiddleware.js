@@ -1,23 +1,38 @@
+import { verifyToken } from './../utils/jwtUtils.js'
+import { findUserByUsername } from './../repositories/userRepository.js'
 
 // Middleware to authenticate requests using JWT
-export const authenticateJWT = (req, res, next) => {
+export const authenticateJWT = (strict = true) => (req, res, next) => {
     const token = req.cookies?.authToken;
 
     if (token) {
         try {
             const decoded = verifyToken(token);
             if (new Date(decoded.expire_date) < new Date()) {
-                return res.status(403).json({ message: 'Token expired' });
+                if (strict) {
+                    return res.status(403).json({ message: 'Token expired' });
+                }
+            } else {
+                const user = findUserByUsername(decoded.username);
+                if (user) {
+                    req.user = user;
+                } else {
+                    if (strict) {
+                        return res.status(403).json({ message: 'Invalid token' });
+                    }
+                }
             }
-            req.user = decoded; // Set the decoded user information into req object
-            next();
         } catch (err) {
-            return res.status(403).json({ message: 'Invalid token' });
+            if (strict) {
+                return res.status(403).json({ message: 'Invalid token' });
+            }
         }
-    } else {
+    } else if (strict) {
         return res.status(401).json({ message: 'Authorization token missing' });
     }
+    next();
 };
+
 
 // Middleware to check user role
 export const authorizeRole = (role) => (req, res, next) => {
